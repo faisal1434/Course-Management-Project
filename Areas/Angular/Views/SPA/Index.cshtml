@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row" ng-app="empApp">
+    <div class="col" ng-controller="empCtrl">
+        <h2>Student List</h2>
+        <table class="table table-bordered table-danger">
+            <thead class="thead-light">
+                <tr>
+                    <th>Student. Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="student in model.students">
+                    <td>{{student.studentName}}</td>
+                    <td>{{student.phone}}</td>
+                    <td>{{student.email}}</td>
+                    <td>{{student.courseName}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <environment include="Development, Production">
+        <script src="~/lib/angular/angular.js"></script>
+        <script>
+            angular.module("empApp", [])
+            .controller("empCtrl", ($scope, $http) => {
+                $scope.model = {};
+                $http.get("/Angular/SPA/StudentList")
+                .then((result) => {
+                    $scope.model.students =result.data;
+                }, (err) => {
+                    $scope.model.students = [];
+                    console.log(err);
+                });
+            });
+        </script>
+    </environment>
+}
+

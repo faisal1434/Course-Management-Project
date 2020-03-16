@@ -1,0 +1,136 @@
+﻿@model IEnumerable<CourseManagemane_Project.ViewModels.CourseVM>
+
+
+
+
+
+
+<table class="table table-bordered">
+    <thead class="thead-light">
+        <tr>
+
+            <th>
+                <a data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { sort=ViewBag.NameSort, search=ViewBag.Search})'>
+                    @Html.DisplayNameFor(model => model.CourseName)
+                    <i class="fa @(ViewBag.NameSort == "name"? "fa-chevron-down": "fa-chevron-up")"></i>
+                </a>
+            </th>
+            <th>
+                <a data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { sort=ViewBag.NameSort, search=ViewBag.Search})'>
+                    @Html.DisplayNameFor(model => model.CourseFee)
+                    <i class="fa @(ViewBag.NameSort == "name"? "fa-chevron-down": "fa-chevron-up")"></i>
+                </a>
+            </th>
+            <th>
+                <a data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { sort=ViewBag.NameSort, search=ViewBag.Search})'>
+                    @Html.DisplayNameFor(model => model.Duration)
+                    <i class="fa @(ViewBag.NameSort == "name"? "fa-chevron-down": "fa-chevron-up")"></i>
+                </a>
+            </th>
+            <th>
+                <a data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { sort=ViewBag.NameSort, search=ViewBag.Search})'>
+                    @Html.DisplayNameFor(model => model.StartDate)
+                    <i class="fa @(ViewBag.NameSort == "name"? "fa-chevron-down": "fa-chevron-up")"></i>
+                </a>
+            </th>
+            <th>
+                <a data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { sort=ViewBag.CountSort, search=ViewBag.Search})'>
+                    @Html.DisplayNameFor(model => model.StudentCount)
+                    <i class="fa @(ViewBag.CountSort == "count"? "fa-chevron-down": "fa-chevron-up")"></i>
+                </a>
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseFee)
+            </td>
+            <td>
+               @item.Duration.ToString("0.00")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentCount)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="d-flex flex-row-reverse">
+    <ul class="pagination pagination-sm">
+        @if (ViewBag.Pager.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { pg = ViewBag.Pager.CurrentPage-1, sort=ViewBag.CurrentSort, search=ViewBag.Search})'>
+                    <i class="fa fa-long-arrow-left"></i>
+                </a>
+            </li>
+        }
+        @for (int i = 1; i <= ViewBag.Pager.TotalPages; i++)
+        {
+            if (i == ViewBag.Pager.CurrentPage)
+            {
+                <li class="page-item active"><span class="page-link">@i</span></li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link" data-ajax="true"
+                       data-ajax-loading="#loading"
+                       data-ajax-mode="replace"
+                       data-ajax-update="#holder"
+                       href='@Url.Action("Summary", "Courses", new { pg = i, sort=ViewBag.CurrentSort, search=ViewBag.Search})'>@i</a>
+
+                </li>
+            }
+
+        }
+        @if (ViewBag.Pager.CurrentPage < ViewBag.Pager.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" data-ajax="true"
+                   data-ajax-loading="#loading"
+                   data-ajax-mode="replace"
+                   data-ajax-update="#holder"
+                   href='@Url.Action("Summary", "Courses", new { pg = ViewBag.Pager.CurrentPage+1, sort=ViewBag.CurrentSort, search=ViewBag.Search})'>
+                    <i class="fa fa-long-arrow-right"></i>
+                </a>
+            </li>
+        }
+    </ul>
+</div>
